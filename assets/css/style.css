@@ -12,7 +12,7 @@
 	color: white;
 }
 
-table {
+#train-schedule {
 	width: 100%;
 }
 
@@ -23,4 +23,8 @@ th {
 
 td {
 	padding-bottom: 10px;
+}
+
+tr {
+	padding-top: 10px;
 }
