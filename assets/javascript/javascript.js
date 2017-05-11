@@ -68,7 +68,7 @@ database.ref().on("child_added", function(childSnapshot) {
     // Current Time
     var currentTime = moment();
 
-    // Difference between the current time and the initial train start time
+    // Difference between the current time and the initial train start time in minutes
     var diffTime = moment().diff(moment(initialTimeConverted), "minutes");
 
     // Calculate the remainder of the diffTime and frequency to help calculate how many minutes away the train is
