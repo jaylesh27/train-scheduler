@@ -19,12 +19,9 @@
 
 th {
 	font-weight: bold;
+	padding-bottom: 10px;
 }
 
 td {
 	padding-bottom: 10px;
-}
-
-tr {
-	padding-top: 10px;
 }
