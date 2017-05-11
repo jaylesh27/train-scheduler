@@ -25,7 +25,7 @@ $("#submit").on("click", function(event) {
     var frequency = $("#frequency").val().trim();
 
     //create an object of the user inputs
-    var newEmp = {
+    var newTrain = {
       trainName: trainName,
       destination: destination,
       initialTime: initialTime,
@@ -34,13 +34,13 @@ $("#submit").on("click", function(event) {
     };
 
     //push object to the database
-    database.ref().push(newEmp);
+    database.ref().push(newTrain);
 
     //clear input boxes
-	$("#train-name").val("");
-	$("#destination").val("");
-	$("#initial-time").val("");
-	$("#frequency").val("");
+    $("#train-name").val("");
+    $("#destination").val("");
+    $("#initial-time").val("");
+    $("#frequency").val("");
 });
 
 
@@ -54,39 +54,34 @@ database.ref().on("child_added", function(childSnapshot) {
     var initialTime = childSnapshot.val().initialTime;
     var frequency = childSnapshot.val().frequency;
 
-    console.log(trainName);
-    console.log(destination);
-    console.log(initialTime);
-    console.log(frequency);
+    // console.log(trainName);
+    // console.log(destination);
+    // console.log(initialTime);
+    // console.log(frequency);
 	//based on user's input for First Train Time and Frequency, use moment.js to output when the train will be arriving next in relation to the current time (output to Next Arrival column) and also display in Minutes Away column how long from the current time till the traim arrives
 	  //Example: using the frequency and First Train time, calculate what the next arrival time is in relation to the current time (ex: if the train arrives every 30 minutes and first train time was 1:00 PM and right now, in reality, it is 1:40 PM, then the next arrival time is 2:00 PM and the train is 20 minutes away)
 
 
     var initialTimeConverted = moment(initialTime, "hh:mm").subtract(1, "years");
-    console.log(initialTimeConverted);
+    // console.log(initialTimeConverted);
 
     // Current Time
     var currentTime = moment();
-    console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
 
-    // Difference between the times
+    // Difference between the current time and the initial train start time
     var diffTime = moment().diff(moment(initialTimeConverted), "minutes");
-    console.log("DIFFERENCE IN TIME: " + diffTime);
 
-    // Time apart (remainder)
+    // Calculate the remainder of the diffTime and frequency to help calculate how many minutes away the train is
     var tRemainder = diffTime % frequency;
-    console.log(tRemainder);
 
-    // Minute Until Train
+    // create var to store how many minutes the train is away
     var tMinutesTillTrain = frequency - tRemainder;
-    console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
-    // Next Train
+    // Calculate the next train by taking the current time and adding how many minutes away the train is
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     var nextTrainArrival = moment(nextTrain).format("hh:mm")
-    console.log("ARRIVAL TIME: " + nextTrainArrival);
 
-
+    //display in HTML the inputted and calculated train info
 	 $("#train-schedule").append(
 	 		"<tr>" +
 	 			"<td>" + trainName + "</td>" +
